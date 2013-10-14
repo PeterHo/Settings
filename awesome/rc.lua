@@ -492,6 +492,9 @@ end
 -- run_once("urxvtd")
 -- run_once("unclutter")
 -- }}}
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> a584149a8bd9eaa3bad89ea77470e09b7f8015c4

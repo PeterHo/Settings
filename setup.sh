@@ -35,6 +35,19 @@ vimcdoc_version="1.9.0"
 sudo add-apt-repository -y ppa:fcwu-tw/ppa
 sudo apt-get update
 
+=======
+# Vim中文文档版本号
+vimcdoc_version="1.9.0"
+
+# {{{ 安装软件
+# 添加软件源
+# sudo add-apt-repository ppa:fcwu-tw/ppa
+# sudo apt-get update
+
+
+# Git
+# sudo apt-get -y install git
+
 # awesome
 sudo apt-get -y install awesome awesome-extra
 
@@ -54,6 +67,16 @@ sudo apt-get -y install wmctrl
 
 # }}}
 
+
+# 等待直到Dropbox文件同步完成
+#while :
+#do
+#	if [ ((dropbox status)) == "Idle" ]
+#	then
+#		break
+#	fi
+#	sleep 1
+#done
 
 # {{{ 配置软件
 # awesome
@@ -86,7 +109,7 @@ tar -xzvf "${HOME}/Dropbox/Tools/vimcdoc-${vimcdoc_version}.tar.gz" -C ~/.vim/
 /bin/bash "${HOME}/.vim/vimcdoc-${vimcdoc_version}/vimcdoc.sh" -i
 
 # 安装插件
-#vundle
+# vundle
 git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
 # 下载插件
@@ -96,6 +119,7 @@ vim +BundleInstall +qall
 mkdir ~/.fonts
 cp -r ~/.vim/bundle/powerline-fonts/* ~/.fonts
 fc-cache -vf ~/.fonts
+
 
 # 修改终端模拟器的字体为 Source Code Pro For Powerline
 
@@ -109,5 +133,7 @@ fc-cache -vf ~/.fonts
 
 
 
-# 清理不用的软件包
+
+
+#清理不用的软件包
 sudo apt-get autoremove
