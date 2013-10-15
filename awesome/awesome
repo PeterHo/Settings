@@ -1,0 +1,89 @@
+安装
+sudo apt-get install awesome awesome-extra
+sudo apt-get install feh
+
+/usr/share/xsessions/awesome.desktop
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=awesome
+Comment=Highly configurable framework window manager
+NoDisplay=false
+TryExec=awesome
+Exec=awesome
+Type=Application
+
+配置
+
+如果是双显示器
+xrandr 查看显示器设备名
+
+sudo vim /etc/X11/Xsession.d/55awesome-autostart
+加入:
+BASESTARTUP=$(basename "$STARTUP" | cut -d\  -f1)
+if [ "$BASESTARTUP" = x-session-manager ]; then
+    BASESTARTUP=$(basename $(readlink /etc/alternatives/x-session-manager))
+fi
+if [ "$BASESTARTUP" = "awesome" ]; then
+    AWESOME_AUTOSTART=$HOME/.config/awesome/autostart.sh
+    if [ -e "$AWESOME_AUTOSTART" ]; then
+        . "$AWESOME_AUTOSTART"
+    fi
+fi
+
+sudo vim ~/.config/awesome/autostart.sh
+加入:
+xrandr --output LVDS1 --auto
+xrandr --output VGA2 --right-of LVDS1 --auto
+
+
+配置文件
+mkdir -p $HOME/.config/awesome
+cp /etc/xdg/awesome/rc.lua $HOME/.config/awesome/
+gvim rc.lua
+
+awesome->edit config
+就会打开配置文件 ~/.config/awesome/rc.lua
+
+各种主题
+git clone https://github.com/mikar/awesome-themes.git ~/.config/awesome/themes
+
+快捷键
+
+工作区
+Win+N               切换到N号工作区
+Win+Left/Win+Right  切换工作区
+Win+Esc             切换到上一个工作区
+Win+Shift+N         将当前窗口发送到工作区N中
+Win+Ctrl+N          把当前工作区和第N号工作区同时显示
+
+窗口
+Win+j/k             切换窗口
+Win+Tab             切换到上一个窗口
+Win+f               全屏/还原窗口
+Win+m               最大化/还原窗口
+Win+n               最小化窗口
+Win+Shift+c         关闭当前窗口
+
+标签
+Win+Shift+j/k       移动窗口标签
+
+布局
+Win+h/l             调整主区域的大小
+Win+Shift+h/l       调整主区域的窗口数量
+Win+Ctrl+h/l        调整非主区域的窗口数量
+Win+Space           切换为下一种窗口布局
+Win+Shift+Space     切换为上一种窗口布局
+Win+Ctrl+Space      切换窗口浮动
+
+Win+Shift+r         重绘当前窗口
+
+Win+r               运行程序，相当于gnome中的Alt-F2
+Win+x               执行Lua命令
+
+Win+Return          运行默认的终端
+
+Win+w               打开菜单
+
+Win+Ctrl+r          重启awesome
+Win+Shift+q         退出awesome(注销)

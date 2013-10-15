@@ -1,0 +1,46 @@
+改更新源
+更新，包括语言支持
+虚拟机安装的话还要安装VMware Tools
+
+
+想办法把这些设置都自动化啊
+
+设置管理器：
+
+面板
+面板1
+尺寸 行大小 20
+在边框处不保留空间
+面板2
+自动显示和隐藏面板
+在边框处不保留空间
+尺寸 行大小 36
+
+
+
+桌面
+图标->默认图标
+全部取消
+
+会话和启动
+启动画面 Mice
+
+时间和日期
+与互联网服务器持同步
+sudo apt-get install ntp
+
+IBus设置
+常规
+下一输入法 删除捷键
+
+
+安装软件
+
+Dropbox
+https://www.dropbox.com/install?os=lnx
+
+http://packages.crunchbang.org/waldorf/pool/main/thunar-dropbox-plugin_0.2.0-1_amd64.deb
+
+
+awesome
+sudo apt-get install awesome awesome-extra

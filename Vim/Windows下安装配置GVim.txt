@@ -1,0 +1,46 @@
+安装GVim
+http://vim.wendal.net/download.php#pc
+将Vim安装目录加入到PATH环境变量中
+
+安装Python
+http://www.python.org/download/
+
+安装Git
+http://code.google.com/p/msysgit/downloads/list
+安装时选择 "Run Git from the Windows Command Prompt",这样就不用手工添加环境变量了
+
+安装Curl
+http://curl.haxx.se/download.html
+建立一个名为 C:\Program Files\Git\cmd\curl.cmd 的文件,加入以下内容:
+
+@rem Do not use "echo off" to not affect any child calls.
+@setlocal
+
+@rem Get the abolute path to the parent directory, which is assumed to be the
+@rem Git installation root.
+@for /F "delims=" %%I in ("%~dp0..") do @set git_install_root=%%~fI
+@set PATH=%git_install_root%\bin;%git_install_root%\mingw\bin;%PATH%
+
+@if not exist "%HOME%" @set HOME=%HOMEDRIVE%%HOMEPATH%
+@if not exist "%HOME%" @set HOME=%USERPROFILE%
+
+@curl.exe %*
+
+
+安装vundle
+cd %USERPROFILE%
+git clone https://github.com/gmarik/vundle.git .vim/bundle/vundle
+
+安装字体
+控制面板->经典视图->字体
+文件->安装新字体->...
+使用DejaVu Sans Mono 字体
+
+
+安装ctags
+http://sourceforge.net/projects/ctags
+在解压后文件夹中找到ctags.exe，将其复制到 C:\Program Files\Vim\vim73 下
+
+
+
+clang
