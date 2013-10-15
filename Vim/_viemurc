@@ -1,0 +1,41 @@
+"/////////////////////////////////////////////////////////////////////////////
+" Key Mappings
+"/////////////////////////////////////////////////////////////////////////////
+ 
+" map Ctrl-Tab to switch window
+nnoremap <S-Up> <C-W><Up>
+nnoremap <S-Down> <C-W><Down>
+nnoremap <S-Left> <C-W><Left>
+nnoremap <S-Right> <C-W><Right>
+ 
+nnoremap <M-k> <C-W><Up>
+nnoremap <M-j> <C-W><Down>
+nnoremap <M-h> <C-W><Left>
+nnoremap <M-l> <C-W><Right>
+ 
+" Easy Diff goto
+"noremap <C-Up> [c
+"noremap <C-k> [c
+"noremap <C-Down> ]c
+"noremap <C-j> ]c
+ 
+" Enhance '<' '>' , do not need to reselect the block after shift it.
+vnoremap < <gv
+vnoremap > >gv
+ 
+" map Up & Down to gj & gk, helpful for wrap text edit
+noremap <Up> gk
+noremap <Down> gj
+ 
+"save file
+:nmap <C-S> <ESC>:w<cr>
+:imap <C-S> <ESC>:w<cr>
+ 
+:inoremap <M-h> <Left>
+:inoremap <M-j> <Down>
+:inoremap <M-k> <Up>
+:inoremap <M-l> <Right>
+ 
+nnoremap <c-Enter> o<Esc>k
+nnoremap <s-Enter> O<Esc>j
+
