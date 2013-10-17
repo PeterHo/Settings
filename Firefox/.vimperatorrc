@@ -1,0 +1,13 @@
+set hintchars=asdfghjkl;
+set tabnumbers
+
+" 更方便的标签切换
+noremap w gT
+noremap e gt
+
+noremap <F8> :nohlsearch<CR>
+
+noremap s ogo 
+noremap S tgo 
+
+highlight Hint font-family: monospace; font-size: 15px; font-weight: bold; text-transform: lowwercase; color: white; background-color: red; border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 1px 0px 1px; 

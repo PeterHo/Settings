@@ -11,6 +11,12 @@ require("naughty")
 require("debian.menu")
 -- }}}
 
+-- {{{ 全局变量
+terminal = "xfce4-terminal"
+-- terminal = "x-terminal-emulator"
+-- terminal = "urxvtc"
+-- }}}
+
 -- {{{ Error handling
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -42,15 +48,14 @@ os.setlocale(os.getenv("LANG"))
 homedir = awful.util.getdir("config")
 
 -- Themes
-themeName = "rbown"
+-- themeName = "bamboo"
+-- themeName = "rbown"
 -- themeName = "brown"
--- themeName = "wmii"
+themeName = "wmii"
 themesPath = homedir .. "/themes/"
 beautiful.init(themesPath .. themeName .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
--- terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 gui_editor = "gvim"
@@ -180,7 +185,7 @@ for s = 1, screen.count() do
     end, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
+    mywibox[s] = awful.wibox({ position = "bottom", screen = s })
     -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
@@ -218,11 +223,11 @@ awful.key({ modkey,           }, "e",      awful.tag.viewnext       ),
 awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
 -- 切换窗口
-awful.key({ modkey, altkey    }, "k", 
+awful.key({ modkey,           }, "i", 
     function () awful.client.focus.byidx(1)
         if client.focus then client.focus:raise() end
     end),
-awful.key({ modkey, altkey    }, "j", 
+awful.key({ modkey,           }, "u", 
     function () awful.client.focus.byidx(-1)
         if client.focus then client.focus:raise() end
     end),
@@ -251,8 +256,8 @@ awful.key({ modkey,           }, ";",
     end),
 
 -- 移动标签
-awful.key({ modkey,           }, "u",       function () awful.client.swap.byidx(  1)    end),
-awful.key({ modkey,           }, "i",       function () awful.client.swap.byidx( -1)    end),
+awful.key({ modkey, altkey    }, "j",       function () awful.client.swap.byidx(  1)  end),
+awful.key({ modkey, altkey    }, "k",       function () awful.client.swap.byidx( -1)  end),
 
 -- 调整窗口大小
 awful.key({ modkey, altkey    }, "l",       function () awful.tag.incmwfact( 0.05)    end),
@@ -428,6 +433,8 @@ awful.rules.rules = {
         properties = { tag = tags[screenIndex][1] } },
     { rule = { class = "Gvim" },
         properties = { tag = tags[screenIndex][2] } },
+    { rule = { class = "Thunar" },
+        properties = { tag = tags[screenIndex][4] } },
     { rule = { class = "VirtualBox" },
         properties = { floating = true, tag = tags[screenIndex][5] } }
 }
@@ -461,14 +468,16 @@ autorunApps =
 { 
     "firefox",
     "gvim",
-    "gnome-screensaver",
-    "gnome-settings-daemon",
+    -- "gnome-screensaver",
+    -- "gnome-settings-daemon",
+    -- "thunar"
     "goldendict",
     -- "x-terminal-emulator",
     "vmware-user",
-    "/usr/bin/env python '/home/goodhzz/Downloads/goagent/local/goagent-gtk.py'",
-    "ubuntuone-launch",
-    "gnome-sound-applet"
+    "/usr/bin/env python '/home/goodhzz/src/goagent-65b9542b98d2/local/goagent-gtk.py'",
+    "dropbox start"
+    -- "ubuntuone-launch",
+    -- "gnome-sound-applet"
 }
 
 function is_running(app_name)
@@ -492,9 +501,3 @@ end
 -- run_once("urxvtd")
 -- run_once("unclutter")
 -- }}}
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> a584149a8bd9eaa3bad89ea77470e09b7f8015c4

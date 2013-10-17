@@ -188,7 +188,7 @@ function! GuiSettings()
 
     set shortmess=atI   " 各种缩略提示
 
-    set lazyredraw      " 推迟重画
+    " set lazyredraw      " 推迟重画
 
     set scrolloff=3     " 提前3行就滚动屏幕
 
@@ -208,16 +208,16 @@ function! GuiSettings()
     endif
 
     " 设置字体
-    set guifont=Sauce\ Code\ Powerline
+    set guifont=Sauce\ Code\ Powerline\ 10
 
     " 启动时最大化
     function! Maximize_Window()
         silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
     endfunction
-    if has("gui_running")
-        au GUIEnter * call Maximize_Window()
-        au VimEnter * call Maximize_Window()
-    endif
+    " if has("gui_running")
+        " au GUIEnter * call Maximize_Window()
+        " au VimEnter * call Maximize_Window()
+    " endif
 endfunction
 call GuiSettings()
 
@@ -262,17 +262,17 @@ function! ProgrammingSettings()
     set matchtime=0             " 设置匹配时间
 
     " 代码折叠
-    set foldmethod=indent       " 通过缩进折叠
+    set foldmethod=marker       " 通过标志折叠
+    set foldmarker={,}          " 类C语言不设置标置也能正常折叠
     set foldlevel=9999          " 不自动折叠
 
     " 补全
     set showfulltag             " 补全时显示标签名和查找模式
 
-    " 不自动插入注释
-    autocmd FileType * setlocal formatoptions-=cro
+    " 不自动插入注释 (放到最后去,要不然会被后面的设置取消掉)
+    " autocmd FileType * set formatoptions-=c formatoptions-=r formatoptions-=o
 endfunction
 call ProgrammingSettings()
-
 
 "/////////////////////////////////////////////////////////////////////////////
 " 自定义命令/键映射
@@ -283,9 +283,12 @@ function! CommandOrKeymapSettings()
     " ------------------------------------------------------------------
 
     " 快捷修改 .vimrc
-    map <silent> <leader>src :source $MYVIMRC<cr>
-    map <silent> <leader>erc :e $MYVIMRC<cr>
-    autocmd! bufwritepost .vimrc source $MYVIMRC
+    map <silent> <leader>sv :source $MYVIMRC<cr>
+    map <silent> <leader>ev :e $MYVIMRC<cr>
+    map <silent> <leader>ei :e $HOME/Dropbox/Install/setup.sh<cr>
+    map <silent> <leader>ea :e $HOME/Dropbox/Settings/awesome/rc.lua<cr>
+    map <silent> <leader>ef :e $HOME/Dropbox/Settings/Firefox/.vimperatorrc<cr>
+    autocmd! bufwritepost .vimrc nested source $MYVIMRC
 
     " 交换前后单词
     nnoremap <silent><leader>sw "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o>
@@ -341,6 +344,10 @@ function! CommandOrKeymapSettings()
     " 快速移动
     " ------------------------------------------------------------------
 
+    " 一次3行
+    noremap <C-e> 3<C-e>
+    noremap <C-y> 3<C-y>
+
     " 插入模式下的光标移动
     inoremap <M-h> <Left>
     inoremap <M-j> <Down>
@@ -353,6 +360,7 @@ endfunction
 call CommandOrKeymapSettings()
 
 
+
 "/////////////////////////////////////////////////////////////////////////////
 " 插件设置
 "/////////////////////////////////////////////////////////////////////////////
@@ -360,12 +368,18 @@ function! PluginSettings()
     " ------------------------------------------------------------------
     " PowerLine
     " ------------------------------------------------------------------
-    " if has ("gui_running")
+    if has ("gui_running")
         set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
         let g:Powerline_symbols = 'fancy'
         let g:Powerline_cache_enabled = 1
         let g:Powerline_cache_file='~/.vim/bundle/powerline/Powerline.cache'
-    " endif
+    else
+        set ttimeoutlen=10
+        augroup FastEscape
+            autocmd!
+            au InsertEnter * set timeoutlen=0
+            au InsertLeave * set timeoutlen=1000
+    endif
 
     "/////////////////////////////////////////////////////////////////////////////
     " NERD Tree
@@ -571,6 +585,9 @@ function! PluginSettings()
     syntax on
 endfunction
 call PluginSettings()
+
+autocmd FileType * set formatoptions-=c formatoptions-=r formatoptions-=o
+
 
 finish
 

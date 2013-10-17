@@ -13,6 +13,13 @@ TryExec=awesome
 Exec=awesome
 Type=Application
 
+
+$ sudo apt-get install xserver-xephyr
+
+$ Xephyr -ac -br -noreset -screen 800x600 :1 &
+
+$ DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua.new
+
 配置
 
 如果是双显示器
