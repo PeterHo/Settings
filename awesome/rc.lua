@@ -13,8 +13,15 @@ require("debian.menu")
 
 -- {{{ 全局变量
 terminal = "xfce4-terminal"
+editer = "xfce4-terminal"
 -- terminal = "x-terminal-emulator"
 -- terminal = "urxvtc"
+gui_editor = "gvim"
+brower = "firefox"
+graphics = "gimp"
+file_manager = "thunar"
+editor = os.getenv("EDITOR") or "editor"
+editor_cmd = terminal .. " -e " .. editor
 -- }}}
 
 -- {{{ Error handling
@@ -55,11 +62,6 @@ themeName = "wmii"
 themesPath = homedir .. "/themes/"
 beautiful.init(themesPath .. themeName .. "/theme.lua")
 
--- This is used later as the default terminal and editor to run.
-editor = os.getenv("EDITOR") or "editor"
-editor_cmd = terminal .. " -e " .. editor
-gui_editor = "gvim"
-graphics = "gimp"
 
 -- Default modkey.
 modkey = "Mod4"
@@ -274,6 +276,9 @@ awful.key({ modkey,           }, "space",   function () awful.layout.inc(layouts
 awful.key({ modkey, "Shift"   }, "space",   function () awful.layout.inc(layouts, -1) end),
 
 -- 启动程序
+awful.key({ modkey,           }, "v",       function () awful.util.spawn(gui_editor) end),
+awful.key({ modkey,           }, "b",       function () awful.util.spawn(brower) end),
+awful.key({ modkey,           }, "h",       function () awful.util.spawn(file_manager) end),
 awful.key({ modkey,           }, "Return",  function () awful.util.spawn(terminal) end),
 awful.key({ modkey,           }, "r",       function () mypromptbox[mouse.screen]:run() end),
 awful.key({ modkey, "Shift"   }, "r",

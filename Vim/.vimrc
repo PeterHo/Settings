@@ -8,11 +8,9 @@ function! PluginManager()
 
     Bundle 'gmarik/vundle'
 
-
     " ------------------------------------------------------------------
-    " 界面类
+    " {{{ 界面类
     " ------------------------------------------------------------------
-
     " 颜色配色方案
     Bundle 'altercation/vim-colors-solarized'
     Bundle 'vim-scripts/Colour-Sampler-Pack'
@@ -24,12 +22,11 @@ function! PluginManager()
     " 美化状态栏
     Bundle 'bling/vim-airline'
     Bundle 'Lokaltog/powerline-fonts'
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " 工程管理
+    " {{{ 工程管理
     " ------------------------------------------------------------------
-
     "" Vimprj的依赖项
     " Bundle 'vim-scripts/DfrankUtil'
     "" 管理工程相关的设置
@@ -38,12 +35,11 @@ function! PluginManager()
     Bundle 'tpope/vim-fugitive'
     "" 项目向导
     "Bundle 'PeterHo/VimAssist'
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " 文件管理
+    " {{{ 文件管理
     " ------------------------------------------------------------------
-
     " 目录树
     Bundle 'scrooloose/nerdtree'
     " 让nerdTree在最后一个buffer窗口关闭时，不让其缩放
@@ -53,10 +49,11 @@ function! PluginManager()
     Bundle 'fholgado/minibufexpl.vim'
     " 搜索目录下的文件
     Bundle 'kien/ctrlp.vim'
+    " }}}
 
-
-    "" 快速编辑
-
+    " ------------------------------------------------------------------
+    " {{{ 快速编辑
+    " ------------------------------------------------------------------
     " 快速注释代码
     Bundle 'scrooloose/nerdcommenter'
     " 自动括号
@@ -69,10 +66,11 @@ function! PluginManager()
     Bundle 'CmdlineComplete'
     " 快速移动光标
     Bundle 'Lokaltog/vim-easymotion'
+    " }}}
 
-
-    "" 编程辅助
-
+    " ------------------------------------------------------------------
+    " {{{ 编程辅助
+    " ------------------------------------------------------------------
     "" 快速在.c和.h文件之间切换
     "Bundle 'a.vim'
     "" 代替taglist.vim
@@ -86,13 +84,14 @@ function! PluginManager()
     "" TopCoder
     "Bundle 'vim-scripts/VimCoder.jar'
     "Bundle 'chazmcgarvey/vimcoder'
+    " scrooloose / syntastic
+    " gregsexton/gitv
+    " repeat.vim 可能有用吧
+    " }}}
 
-     " scrooloose / syntastic
-     " gregsexton/gitv
-     " repeat.vim 可能有用吧
-
-    "" Python编程环境
-
+    " ------------------------------------------------------------------
+    " {{{ Python编程环境
+    " ------------------------------------------------------------------
     "" Bundle 'klen/python-mode' " 确实用不了
     "" 补全
     ""Bundle 'vim-scripts/Pydiction'
@@ -102,17 +101,24 @@ function! PluginManager()
     "Bundle 'kevinw/pyflakes-vim'
     "" 调试
     "Bundle 'gotcha/vimpdb'
+    " }}}
 
-    "" Go编程环境
+    " ------------------------------------------------------------------
+    " {{{ Go编程环境
+    " ------------------------------------------------------------------
     "Bundle 'jnwhiteh/vim-golang'
     "Bundle 'nsf/gocode'
+    " }}}
 
-    " 其它
+    " ------------------------------------------------------------------
+    " {{{ 其它
+    " ------------------------------------------------------------------
     " Shell
     Bundle 'Shougo/vimproc.vim'
     Bundle 'Shougo/vimshell.vim'
     " 个人wiki
     Bundle 'vim-scripts/vimwiki'
+    " }}}
 
     filetype on
 endfunction
@@ -212,7 +218,6 @@ function! GuiSettings()
 
     " 设置字体
     set guifont=Sauce\ Code\ Powerline\ 10
-    " set guifont=Source\ Code\ Pro\ 10
 
     " 启动时最大化
     function! Maximize_Window()
@@ -265,7 +270,7 @@ function! ProgrammingSettings()
 
     " 代码折叠
     set foldmethod=marker       " 通过标志折叠
-    set foldmarker={,}          " 类C语言不设置标置也能正常折叠
+    set foldmarker={{{,}}}      " 折叠标志
     set foldlevel=9999          " 不自动折叠
 
     " 补全
@@ -281,12 +286,12 @@ call ProgrammingSettings()
 "/////////////////////////////////////////////////////////////////////////////
 function! CommandOrKeymapSettings()
     " ------------------------------------------------------------------
-    " 快速编辑
+    " {{{ 快速编辑
     " ------------------------------------------------------------------
-
     " 快捷修改 .vimrc
     map <silent> <leader>sv :source $MYVIMRC<cr>
-    map <silent> <leader>ev :e $MYVIMRC<cr>
+    " map <silent> <leader>ev :e $MYVIMRC<cr>
+    map <silent> <leader>ev :e $HOME/Dropbox/Settings/Vim/.vimrc<cr>
     map <silent> <leader>ei :e $HOME/Dropbox/Install/setup.sh<cr>
     map <silent> <leader>ea :e $HOME/Dropbox/Settings/awesome/rc.lua<cr>
     map <silent> <leader>ef :e $HOME/Dropbox/Settings/Firefox/.vimperatorrc<cr>
@@ -311,12 +316,11 @@ function! CommandOrKeymapSettings()
     nnoremap <S-CR> o<Esc>k
     nnoremap <Space> i<Space><Esc>l
     " nnoremap <Backspace> X
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " 界面/窗口
+    " {{{ 界面/窗口
     " ------------------------------------------------------------------
-
     " 清除查找高亮
     nnoremap <F8> :let @/=""<CR>
 
@@ -351,11 +355,11 @@ function! CommandOrKeymapSettings()
         call system("wmctrl -ir " . v:windowid . " -b " . mod . ",fullscreen")
     endfunction
     map <silent> <F11> :call ToggleFullscreen()<CR>
+    " }}}
 
     " ------------------------------------------------------------------
-    " 快速移动
+    " {{{ 快速移动
     " ------------------------------------------------------------------
-
     " 一次3行
     noremap <C-e> 3<C-e>
     noremap <C-y> 3<C-y>
@@ -368,6 +372,7 @@ function! CommandOrKeymapSettings()
 
     " 用;;代替已被占用的;
     nnoremap ;; ;
+    " }}}
 endfunction
 call CommandOrKeymapSettings()
 " }}}
@@ -376,7 +381,7 @@ call CommandOrKeymapSettings()
 "/////////////////////////////////////////////////////////////////////////////
 function! PluginSettings()
     " ------------------------------------------------------------------
-    " airline
+    " {{{ airline
     " ------------------------------------------------------------------
     " 使用PowerLine的字体
     let g:airline_powerline_fonts = 1
@@ -413,10 +418,16 @@ function! PluginSettings()
     " let g:airline#extensions#virtualenv#enabled = 1
     " " eclim
     " let g:airline#extensions#eclim#enabled = 1
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " NERD Tree
+    " {{{ fugitive
+    " ------------------------------------------------------------------
+    command! -nargs=0 Gs :Gstatus
+    " }}}
+
+    " ------------------------------------------------------------------
+    " {{{ NERD Tree
     " ------------------------------------------------------------------
     nmap <silent> <F5> :NERDTreeToggle<CR>
     let g:NERDChristmasTree=1
@@ -430,16 +441,16 @@ function! PluginSettings()
     " Prevent :bd inside NERDTree buffer
     au FileType nerdtree cnoreabbrev <buffer> bd <nop>
     au FileType nerdtree cnoreabbrev <buffer> BD <nop>
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " bufkill
+    " {{{ bufkill
     " ------------------------------------------------------------------
     noremap <silent> <leader>z :bd<CR>
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " MiniBufExpl
+    " {{{ MiniBufExpl
     " ------------------------------------------------------------------
     let g:miniBufExplorerAutoStart = 1
     let g:miniBufExplBuffersNeeded = 0
@@ -451,10 +462,10 @@ function! PluginSettings()
     nnoremap <silent><C-k> :MBEbn<cr>
     nnoremap <silent><C-j> :MBEbp<cr>
     nnoremap <silent><C-i> <C-^>
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " bufferline
+    " {{{ bufferline
     " ------------------------------------------------------------------
     " let g:bufferline_active_buffer_left = '['
     " let g:bufferline_active_buffer_right = ']'
@@ -462,10 +473,10 @@ function! PluginSettings()
     " let g:bufferline_show_bufnr = 1
     " noremap <silent> <leader>f :bp<CR>
     " noremap <silent> <leader>j :bn<CR>
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " CtrlP
+    " {{{ CtrlP
     " ------------------------------------------------------------------
     " 搜索最近文件
     nnoremap <leader>rr :CtrlPMRU<CR>
@@ -477,17 +488,17 @@ function! PluginSettings()
     let g:ctrlp_working_path_mode=0
     let g:ctrlp_max_height=15
     let g:ctrlp_mruf_max=500
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " NERD Commenter
+    " {{{ NERD Commenter
     " ------------------------------------------------------------------
     let g:NERDRemoveExtraSpaces=1
     let g:NERDSpaceDelims=1
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " UltiSnips
+    " {{{ UltiSnips
     " ------------------------------------------------------------------
     let g:UltiSnipsUsePythonVersion = 2
     let g:UltiSnipsSnippetsDir="~/.vim/settings/UltiSnips"
@@ -495,10 +506,10 @@ function! PluginSettings()
     let g:UltiSnipsSnippetDirectories=["bundle/ultisnips/UltiSnips/", "settings/UltiSnips"]
     "let g:UltiSnipsJumpForwardTrigger="<tab>"
     "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " YouCompleteMe
+    " {{{ YouCompleteMe
     " ------------------------------------------------------------------
     nnoremap <leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
     let g:ycm_complete_in_comments = 1
@@ -506,25 +517,25 @@ function! PluginSettings()
     let g:ycm_global_ycm_extra_conf = '~/.vim/settings/.ycm_extra_conf.py'
     let g:ycm_confirm_extra_conf = 0
     set completeopt=menu,longest
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " EasyMotion
+    " {{{ EasyMotion
     " ------------------------------------------------------------------
     let g:EasyMotion_leader_key = 'm'
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " vimshell
+    " {{{ vimshell
     " ------------------------------------------------------------------
     let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
     let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
     let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
     command! -nargs=0 S :VimShell
-
+    " }}}
 
     " ------------------------------------------------------------------
-    " Vimwiki
+    " {{{ Vimwiki
     " ------------------------------------------------------------------
     let g:vimwiki_use_mouse=1
     let wiki = {}
@@ -541,7 +552,7 @@ function! PluginSettings()
     let g:vimwiki_list_ignore_newline = 0
     nmap <silent> <leader>wah :VimwikiAll2HTML<cr>
     nmap <silent> <leader>tt :e $HOME/Dropbox/vimwiki/计划/计划.wiki<cr>
-
+    " }}}
 
     "/////////////////////////////////////////////////////////////////////////////
     " Tagbar
