@@ -22,19 +22,21 @@ function! PluginManager()
     " 美化状态栏
     Bundle 'bling/vim-airline'
     Bundle 'Lokaltog/powerline-fonts'
+    " <C-W>o
+    Bundle 'vim-scripts/zoomwintab.vim'
     " }}}
 
     " ------------------------------------------------------------------
     " {{{ 工程管理
     " ------------------------------------------------------------------
-    "" Vimprj的依赖项
-    " Bundle 'vim-scripts/DfrankUtil'
-    "" 管理工程相关的设置
-    "Bundle 'vimprj'
+    " Vimprj的依赖项
+    Bundle 'vim-scripts/DfrankUtil'
+    " 管理工程相关的设置
+    Bundle 'vimprj'
     " 源代码管理
     Bundle 'tpope/vim-fugitive'
-    "" 项目向导
-    "Bundle 'PeterHo/VimAssist'
+    " 项目向导
+    Bundle 'PeterHo/VimAssist'
     " }}}
 
     " ------------------------------------------------------------------
@@ -77,8 +79,8 @@ function! PluginManager()
     "Bundle 'majutsushi/tagbar'
     "" 方便对齐代码
     "Bundle 'godlygeek/tabular'
-    "" 文件中查找替换
-    "Bundle 'vim-scripts/EasyGrep'
+    " 文件中查找替换
+    Bundle 'vim-scripts/EasyGrep'
     "" 快速设置书签
     "Bundle 'vim-scripts/Vim-bookmark'
     "" TopCoder
@@ -315,7 +317,7 @@ function! CommandOrKeymapSettings()
     nnoremap <CR> O<Esc>j
     nnoremap <S-CR> o<Esc>k
     nnoremap <Space> i<Space><Esc>l
-    " nnoremap <Backspace> X
+    nnoremap <Backspace> X
     " }}}
 
     " ------------------------------------------------------------------
@@ -396,9 +398,9 @@ function! PluginSettings()
     " " bufferline
     " let g:airline#extensions#bufferline#enabled = 1
     " let g:airline#extensions#bufferline#overwrite_variables = 1
-    " " fugitive
-    " let g:airline#extensions#branch#enabled = 1
-    " let g:airline#extensions#branch#empty_message = ''
+    " fugitive
+    let g:airline#extensions#branch#enabled = 1
+    let g:airline#extensions#branch#empty_message = ''
     " " syntastic
     " let g:airline#extensions#syntastic#enabled = 1
     " " tabbar
@@ -421,10 +423,29 @@ function! PluginSettings()
     " }}}
 
     " ------------------------------------------------------------------
+    " {{{ vimprj
+    " ------------------------------------------------------------------
+    let g:vimprj_changeCurDirIfVimprjFound=0
+
+    function! <SID>SetMainDefaults()
+       " 设置tags路径
+       set tags=./.vimprj/tags
+    endfunction
+
+    call <SID>SetMainDefaults()
+
+    call vimprj#init()
+
+    function! g:vimprj#dHooks['SetDefaultOptions']['main_options'](dParams)
+       call <SID>SetMainDefaults()
+    endfunction
+    " }}}
+
+    " ------------------------------------------------------------------
     " {{{ fugitive
     " ------------------------------------------------------------------
-    command! -nargs=0 Gs :Gstatus
-    command! -nargs=0 Gc :Gcommit
+    command! -nargs=0 G :Gstatus
+    cnoremap Cm Gcommit -m "
     " }}}
 
     " ------------------------------------------------------------------
@@ -447,7 +468,7 @@ function! PluginSettings()
     " ------------------------------------------------------------------
     " {{{ bufkill
     " ------------------------------------------------------------------
-    noremap <silent> <leader>z :bd<CR>
+    noremap <silent> <leader>z :BD<cr>
     " }}}
 
     " ------------------------------------------------------------------
@@ -524,6 +545,14 @@ function! PluginSettings()
     " {{{ EasyMotion
     " ------------------------------------------------------------------
     let g:EasyMotion_leader_key = 'm'
+    " }}}
+
+    " ------------------------------------------------------------------
+    " {{{ EasyGrep
+    " ------------------------------------------------------------------
+    let g:EasyGrepMode = 2
+    let g:EasyGrepRecursive = 1
+
     " }}}
 
     " ------------------------------------------------------------------
@@ -604,26 +633,6 @@ function! PluginSettings()
     nnoremap <silent> <F2> :VbookmarkNext<CR>
 
 
-    "/////////////////////////////////////////////////////////////////////////////
-    " vimprj
-    "/////////////////////////////////////////////////////////////////////////////
-"    let g:vimprj_changeCurDirIfVimprjFound=0
-
-"    function! <SID>SetMainDefaults()
-"        " your default options goes here!
-"        set tags=./.vimprj/tags
-"    endfunction
-"
-"    call <SID>SetMainDefaults()
-"
-"    " initialize vimprj plugin
-"    call vimprj#init()
-"
-"    " define a hook
-"    function! g:vimprj#dHooks['SetDefaultOptions']['main_options'](dParams)
-"        call <SID>SetMainDefaults()
-"    endfunction
-
 
     "/////////////////////////////////////////////////////////////////////////////
     " man
@@ -666,7 +675,6 @@ autocmd FileType * set formatoptions-=c formatoptions-=r formatoptions-=o
 
 finish
 
-" 显示总行数
 
 " programming related
 "set tags+=./tags,./../tags,./**/tags,tags,~/.vim/systags " which tags files CTRL-] will find
@@ -674,8 +682,6 @@ finish
 set viminfo+=! " make sure it can save viminfo
 
 " diff
-
-" 窗口独占切换
 
 " Update
 :nmap <M-u> :call Update()<CR><CR>
