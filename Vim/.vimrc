@@ -1,5 +1,4 @@
-"/////////////////////////////////////////////////////////////////////////////
-" 插件管理
+" {{{ 插件管理
 "/////////////////////////////////////////////////////////////////////////////
 function! PluginManager()
     set nocompatible
@@ -17,53 +16,59 @@ function! PluginManager()
     " 颜色配色方案
     Bundle 'altercation/vim-colors-solarized'
     Bundle 'vim-scripts/Colour-Sampler-Pack'
+    Bundle 'toupeira/vim-desertink'
     " 快捷浏览配色方案
     Bundle 'vim-scripts/Color-Scheme-Explorer'
     " 高亮Tag
     " Bundle 'magic-dot-files/TagHighlight'
     " 美化状态栏
-    Bundle 'Lokaltog/powerline'
+    Bundle 'bling/vim-airline'
     Bundle 'Lokaltog/powerline-fonts'
 
 
-    "" 工程管理
+    " ------------------------------------------------------------------
+    " 工程管理
+    " ------------------------------------------------------------------
 
-    "" 一些插件的依赖项
-    "Bundle 'DfrankUtil'
+    "" Vimprj的依赖项
+    " Bundle 'vim-scripts/DfrankUtil'
     "" 管理工程相关的设置
     "Bundle 'vimprj'
-    "" 源代码管理
-    "Bundle 'tpope/vim-fugitive'
+    " 源代码管理
+    Bundle 'tpope/vim-fugitive'
     "" 项目向导
     "Bundle 'PeterHo/VimAssist'
 
 
-    "" 文件管理
+    " ------------------------------------------------------------------
+    " 文件管理
+    " ------------------------------------------------------------------
 
-    "" 目录树
-    "Bundle 'scrooloose/nerdtree'
-    "" 让nerdTree在最后一个buffer窗口关闭时，不让其缩放
-    "Bundle 'oblitum/bufkill'
-    "" 查看Buf文件
-    "Bundle 'fholgado/minibufexpl.vim'
-    "" 搜索目录下的文件
-    "Bundle 'kien/ctrlp.vim'
+    " 目录树
+    Bundle 'scrooloose/nerdtree'
+    " 让nerdTree在最后一个buffer窗口关闭时，不让其缩放
+    Bundle 'vim-scripts/bufkill.vim'
+    " 查看Buf文件
+    " Bundle 'bling/vim-bufferline'
+    Bundle 'fholgado/minibufexpl.vim'
+    " 搜索目录下的文件
+    Bundle 'kien/ctrlp.vim'
 
 
     "" 快速编辑
 
-    "" 快速注释代码
-    "Bundle 'scrooloose/nerdcommenter'
-    "" 自动括号
-    "Bundle 'jiangmiao/auto-pairs'
-    "" 代替snipMate
-    "Bundle 'SirVer/ultisnips'
-    "" 相当牛逼的补全,一旦拥有别无所求
-    "Bundle 'Valloric/YouCompleteMe'
-    "" 命令补全
-    "Bundle 'CmdlineComplete'
-    "" 快速移动光标
-    "Bundle 'Lokaltog/vim-easymotion'
+    " 快速注释代码
+    Bundle 'scrooloose/nerdcommenter'
+    " 自动括号
+    Bundle 'jiangmiao/auto-pairs'
+    " 代替snipMate
+    Bundle 'SirVer/ultisnips'
+    " 相当牛逼的补全,一旦拥有别无所求
+    Bundle 'Valloric/YouCompleteMe'
+    " 命令补全
+    Bundle 'CmdlineComplete'
+    " 快速移动光标
+    Bundle 'Lokaltog/vim-easymotion'
 
 
     "" 编程辅助
@@ -82,6 +87,9 @@ function! PluginManager()
     "Bundle 'vim-scripts/VimCoder.jar'
     "Bundle 'chazmcgarvey/vimcoder'
 
+     " scrooloose / syntastic
+     " gregsexton/gitv
+     " repeat.vim 可能有用吧
 
     "" Python编程环境
 
@@ -99,31 +107,27 @@ function! PluginManager()
     "Bundle 'jnwhiteh/vim-golang'
     "Bundle 'nsf/gocode'
 
-    "" 其它
-    "" 个人wiki
-    "Bundle 'vim-scripts/vimwiki'
-    "" Orgmode
-    "Bundle 'hsitz/VimOrganizer'
-    "Bundle 'vim-scripts/utl.vim'
-    "Bundle 'mattn/calendar-vim'
-    "Bundle 'chrisbra/NrrwRgn'
+    " 其它
+    " Shell
+    Bundle 'Shougo/vimproc.vim'
+    Bundle 'Shougo/vimshell.vim'
+    " 个人wiki
+    Bundle 'vim-scripts/vimwiki'
 
     filetype on
 endfunction
 call PluginManager()
+" }}}
 
-
-"/////////////////////////////////////////////////////////////////////////////
-" 定义常量
+" {{{ 定义常量
 "/////////////////////////////////////////////////////////////////////////////
 let IsLinux = has("UNIX")
 let IsWin32 = has("Win32")
 
 let mapleader = ";"
+" }}}
 
-
-"/////////////////////////////////////////////////////////////////////////////
-" 常规设置
+" {{{ 常规设置
 "/////////////////////////////////////////////////////////////////////////////
 function! CommonSettings()
     " 不使用兼容vi的模式
@@ -154,7 +158,7 @@ function! CommonSettings()
     set autoread " auto read same-file change ( better for vc/vim change )
 
     " 允许切换未保存的Buffer
-    set hidden          
+    set hidden
 
     set clipboard=unnamedplus
 
@@ -168,10 +172,9 @@ function! CommonSettings()
     set fileencodings=ucs-bom,utf-8,chinese,cp936
 endfunction
 call CommonSettings()
+" }}}
 
-
-"/////////////////////////////////////////////////////////////////////////////
-" 界面/显示
+" {{{ 界面/显示
 "/////////////////////////////////////////////////////////////////////////////
 function! GuiSettings()
     set number          " 显示行号
@@ -209,6 +212,7 @@ function! GuiSettings()
 
     " 设置字体
     set guifont=Sauce\ Code\ Powerline\ 10
+    " set guifont=Source\ Code\ Pro\ 10
 
     " 启动时最大化
     function! Maximize_Window()
@@ -220,10 +224,9 @@ function! GuiSettings()
     " endif
 endfunction
 call GuiSettings()
+" }}}
 
-
-"/////////////////////////////////////////////////////////////////////////////
-" 查找/替换
+" {{{ 查找/替换
 "/////////////////////////////////////////////////////////////////////////////
 function! FindAndReplaceSettings()
     " 增量搜索
@@ -236,10 +239,9 @@ function! FindAndReplaceSettings()
     set hlsearch
 endfunction
 call FindAndReplaceSettings()
+" }}}
 
-
-"/////////////////////////////////////////////////////////////////////////////
-" 编程相关设置
+" {{{ 编程相关设置
 "/////////////////////////////////////////////////////////////////////////////
 function! ProgrammingSettings()
     " 缩进
@@ -273,9 +275,9 @@ function! ProgrammingSettings()
     " autocmd FileType * set formatoptions-=c formatoptions-=r formatoptions-=o
 endfunction
 call ProgrammingSettings()
+" }}}
 
-"/////////////////////////////////////////////////////////////////////////////
-" 自定义命令/键映射
+" {{{ 自定义命令/键映射
 "/////////////////////////////////////////////////////////////////////////////
 function! CommandOrKeymapSettings()
     " ------------------------------------------------------------------
@@ -305,10 +307,11 @@ function! CommandOrKeymapSettings()
     :imap <C-S> <ESC>:w<cr>
 
     " 普通模式下的 Backspace Space Enter 的行为
-    nnoremap <Enter> O<Esc>j
-    nnoremap <s-Enter> o<Esc>k
+    nnoremap <CR> O<Esc>j
+    nnoremap <S-CR> o<Esc>k
     nnoremap <Space> i<Space><Esc>l
-    nnoremap <Backspace> X
+    " nnoremap <Backspace> X
+
 
     " ------------------------------------------------------------------
     " 界面/窗口
@@ -323,8 +326,17 @@ function! CommandOrKeymapSettings()
     nnoremap <M-h> <C-W><Left>
     nnoremap <M-l> <C-W><Right>
 
+    " 调整窗口大小
+    nnoremap <silent><leader>wj 4<C-W><C-->
+    nnoremap <silent><leader>wk 4<C-W><C-+>
+    nnoremap <silent><leader>wh 4<C-W><C->>
+    nnoremap <silent><leader>wl 4<C-W><C-<>
+
+    " 快速分隔窗口
+    command! V vsp
+
     " 关闭窗口
-    nnoremap Q <C-W>c  
+    nnoremap Q <C-W>c
 
     " 全屏
     let g:fullscreen = 0
@@ -358,32 +370,54 @@ function! CommandOrKeymapSettings()
     nnoremap ;; ;
 endfunction
 call CommandOrKeymapSettings()
+" }}}
 
-
-
-"/////////////////////////////////////////////////////////////////////////////
-" 插件设置
+" {{{ 插件设置
 "/////////////////////////////////////////////////////////////////////////////
 function! PluginSettings()
     " ------------------------------------------------------------------
-    " PowerLine
+    " airline
     " ------------------------------------------------------------------
-    if has ("gui_running")
-        set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-        let g:Powerline_symbols = 'fancy'
-        let g:Powerline_cache_enabled = 1
-        let g:Powerline_cache_file='~/.vim/bundle/powerline/Powerline.cache'
-    else
-        set ttimeoutlen=10
-        augroup FastEscape
-            autocmd!
-            au InsertEnter * set timeoutlen=0
-            au InsertLeave * set timeoutlen=1000
-    endif
+    " 使用PowerLine的字体
+    let g:airline_powerline_fonts = 1
+    " 显示总行数
+    let g:airline_section_z = '%#__accent_bold#%l/%L%#__restore__#%3c'
+    " 提示行尾空格和异常缩进
+    let g:airline#extensions#whitespace#enabled = 1
+    " 主题
+    let g:airline_theme="powerlineish"
+    set ttimeoutlen=50
 
-    "/////////////////////////////////////////////////////////////////////////////
+    " " bufferline
+    " let g:airline#extensions#bufferline#enabled = 1
+    " let g:airline#extensions#bufferline#overwrite_variables = 1
+    " " fugitive
+    " let g:airline#extensions#branch#enabled = 1
+    " let g:airline#extensions#branch#empty_message = ''
+    " " syntastic
+    " let g:airline#extensions#syntastic#enabled = 1
+    " " tabbar
+    " let g:airline#extensions#tagbar#enabled = 1
+    " let g:airline#extensions#tagbar#flags = ''  "default
+    " let g:airline#extensions#tagbar#flags = 'f'
+    " let g:airline#extensions#tagbar#flags = 's'
+    " let g:airline#extensions#tagbar#flags = 'p'
+    " " vim-gitgutter/vim-signify
+    " let g:airline#extensions#hunks#enabled = 1
+    " let g:airline#extensions#hunks#non_zero_only = 0
+    " let g:airline#extensions#hunks#hunk_symbols = ['+', '~', '-']
+    " Ctrl-P
+    let g:airline#extensions#ctrlp#color_template = 'insert'
+    let g:airline#extensions#ctrlp#show_adjacent_modes = 1
+    " " virtualenv
+    " let g:airline#extensions#virtualenv#enabled = 1
+    " " eclim
+    " let g:airline#extensions#eclim#enabled = 1
+
+
+    " ------------------------------------------------------------------
     " NERD Tree
-    "/////////////////////////////////////////////////////////////////////////////
+    " ------------------------------------------------------------------
     nmap <silent> <F5> :NERDTreeToggle<CR>
     let g:NERDChristmasTree=1
     let g:NERDTreeAutoCenter=1
@@ -393,35 +427,120 @@ function! PluginSettings()
     let g:NERDTreeChDirMode=2
     let g:NERDTreeIgnore=['\.pyc$', 'tags', '\.taghl$']
 
-    " bufkill bd's: really do not mess with NERDTree buffer
-    "nnoremap <silent> <backspace> :BD<cr>
-    "nnoremap <silent> <s-backspace> :BD!<cr>
-
     " Prevent :bd inside NERDTree buffer
     au FileType nerdtree cnoreabbrev <buffer> bd <nop>
     au FileType nerdtree cnoreabbrev <buffer> BD <nop>
 
 
-    "/////////////////////////////////////////////////////////////////////////////
+    " ------------------------------------------------------------------
+    " bufkill
+    " ------------------------------------------------------------------
+    noremap <silent> <leader>z :bd<CR>
+
+
+    " ------------------------------------------------------------------
+    " MiniBufExpl
+    " ------------------------------------------------------------------
+    let g:miniBufExplorerAutoStart = 1
+    let g:miniBufExplBuffersNeeded = 0
+    let g:miniBufExplUseSingleClick = 1
+    let g:miniBufExplShowBufNumbers = 1
+    let g:miniBufExplCycleArround = 1
+    nnoremap <silent><F6> :MBEToggle<cr>
+    nnoremap <silent><leader>a :MBEToggleMRU<cr>
+    nnoremap <silent><C-k> :MBEbn<cr>
+    nnoremap <silent><C-j> :MBEbp<cr>
+    nnoremap <silent><C-i> <C-^>
+
+
+    " ------------------------------------------------------------------
+    " bufferline
+    " ------------------------------------------------------------------
+    " let g:bufferline_active_buffer_left = '['
+    " let g:bufferline_active_buffer_right = ']'
+    " let g:bufferline_modified = '+'
+    " let g:bufferline_show_bufnr = 1
+    " noremap <silent> <leader>f :bp<CR>
+    " noremap <silent> <leader>j :bn<CR>
+
+
+    " ------------------------------------------------------------------
+    " CtrlP
+    " ------------------------------------------------------------------
+    " 搜索最近文件
+    nnoremap <leader>rr :CtrlPMRU<CR>
+    " 搜索Buffer文件
+    nnoremap <leader>bb :CtrlPBuffer<CR>
+
+    let g:ctrlp_switch_buffer = 'Et'
+    let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$\|.rvm$'
+    let g:ctrlp_working_path_mode=0
+    let g:ctrlp_max_height=15
+    let g:ctrlp_mruf_max=500
+
+
+    " ------------------------------------------------------------------
     " NERD Commenter
-    "/////////////////////////////////////////////////////////////////////////////
+    " ------------------------------------------------------------------
     let g:NERDRemoveExtraSpaces=1
     let g:NERDSpaceDelims=1
 
 
-    "/////////////////////////////////////////////////////////////////////////////
-    " MiniBufExpl
-    "/////////////////////////////////////////////////////////////////////////////
-    let g:miniBufExplMapCTabSwitchBufs=1
-    "let g:miniBufExplMapWindowNavArrows=1
-    let g:miniBufExplUseSingleClick=1
-    let g:miniBufExplModSelTarget=1
-    let g:miniBufExplMaxSize=1
-    let g:miniBufExplorerMoreThanOne=1
-    let g:miniBufExplCycleArround=1
-    "let g:miniBufExplMapWindowNavVim=1
-    noremap <leader>h :MBEbp<CR>
-    noremap <leader>l :MBEbn<CR>
+    " ------------------------------------------------------------------
+    " UltiSnips
+    " ------------------------------------------------------------------
+    let g:UltiSnipsUsePythonVersion = 2
+    let g:UltiSnipsSnippetsDir="~/.vim/settings/UltiSnips"
+    let g:UltiSnipsExpandTrigger="<c-j>"
+    let g:UltiSnipsSnippetDirectories=["bundle/ultisnips/UltiSnips/", "settings/UltiSnips"]
+    "let g:UltiSnipsJumpForwardTrigger="<tab>"
+    "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+
+    " ------------------------------------------------------------------
+    " YouCompleteMe
+    " ------------------------------------------------------------------
+    nnoremap <leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    let g:ycm_complete_in_comments = 1
+    let g:ycm_collect_identifiers_from_tags_files = 1
+    let g:ycm_global_ycm_extra_conf = '~/.vim/settings/.ycm_extra_conf.py'
+    let g:ycm_confirm_extra_conf = 0
+    set completeopt=menu,longest
+
+
+    " ------------------------------------------------------------------
+    " EasyMotion
+    " ------------------------------------------------------------------
+    let g:EasyMotion_leader_key = 'm'
+
+
+    " ------------------------------------------------------------------
+    " vimshell
+    " ------------------------------------------------------------------
+    let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
+    let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
+    let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+    command! -nargs=0 S :VimShell
+
+
+    " ------------------------------------------------------------------
+    " Vimwiki
+    " ------------------------------------------------------------------
+    let g:vimwiki_use_mouse=1
+    let wiki = {}
+    let wiki.path = '~/Dropbox/vimwiki/'
+    let wiki.path_html = '~/Dropbox/vimwiki/html/'
+    let wiki.template_path = '~/Dropbox/vimwiki/'
+    let wiki.template_default = 'default'
+    let wiki.template_ext = '.tpl'
+    let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'c': 'c', 'bash': 'sh'}
+    let g:vimwiki_list = [wiki]
+    let g:vimwiki_hl_cb_checked = 1
+    let g:vimwiki_folding = 'expr'
+    let g:vimwiki_html_header_numbering = 0
+    let g:vimwiki_list_ignore_newline = 0
+    nmap <silent> <leader>wah :VimwikiAll2HTML<cr>
+    nmap <silent> <leader>tt :e $HOME/Dropbox/vimwiki/计划/计划.wiki<cr>
 
 
     "/////////////////////////////////////////////////////////////////////////////
@@ -431,16 +550,6 @@ function! PluginSettings()
     let g:tagbar_singleclick=1
 
 
-    "/////////////////////////////////////////////////////////////////////////////
-    " YouCompleteMe
-    "/////////////////////////////////////////////////////////////////////////////
-    nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    let g:ycm_complete_in_comments = 1
-    let g:ycm_global_ycm_extra_conf = '~/.vim/settings/.ycm_extra_conf.py'
-    let g:ycm_confirm_extra_conf = 0
-    "let g:ycm_autoclose_preview_window_after_completion = 1
-    "let g:ycm_autoclose_preview_window_after_insertion = 1
-    set completeopt=menu,longest
 
 
     "/////////////////////////////////////////////////////////////////////////////
@@ -473,35 +582,6 @@ function! PluginSettings()
     nmap <C-C><C-F> :cs find f <C-R>=expand("<cfile>")<CR><CR>
     nmap <C-C><C-I> :cs find i <C-R>=expand("<cfile>")<CR><CR>
     nmap <C-C><C-D> :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-
-    "/////////////////////////////////////////////////////////////////////////////
-    " CtrlP
-    "/////////////////////////////////////////////////////////////////////////////
-    noremap <C-W><C-U> :CtrlPMRU<CR>
-    nnoremap <C-W>u :CtrlPMRU<CR>
-
-    let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$\|.rvm$'
-    let g:ctrlp_working_path_mode=0
-    let g:ctrlp_max_height=15
-    let g:ctrlp_mruf_max=500
-
-
-    "/////////////////////////////////////////////////////////////////////////////
-    " EasyMotion
-    "/////////////////////////////////////////////////////////////////////////////
-    let g:EasyMotion_leader_key = 'm'
-
-
-    "/////////////////////////////////////////////////////////////////////////////
-    " UltiSnips
-    "/////////////////////////////////////////////////////////////////////////////
-    let g:UltiSnipsUsePythonVersion = 2
-    let g:UltiSnipsExpandTrigger="<c-j>"
-    let g:UltiSnipsSnippetsDir="~/.vim/settings/UltiSnips"
-    let g:UltiSnipsSnippetDirectories=["settings/UltiSnips"]
-    "let g:UltiSnipsJumpForwardTrigger="<tab>"
-    "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 
 
@@ -548,24 +628,6 @@ function! PluginSettings()
     "let &dictionary = g:pydiction_location
 
 
-    "/////////////////////////////////////////////////////////////////////////////
-    " Vimwiki
-    "/////////////////////////////////////////////////////////////////////////////
-    let g:vimwiki_use_mouse=1
-    let wiki = {}
-    let wiki.path = '~/vimwiki/vimwiki/'
-    let wiki.path_html = '~/vimwiki/vimwiki/html/'
-    let wiki.template_path = '~/vimwiki/vimwiki/'
-    let wiki.template_default = 'default'
-    let wiki.template_ext = '.tpl'
-    let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'c': 'c'}
-    let g:vimwiki_list = [wiki]
-    let g:vimwiki_hl_cb_checked = 1
-    let g:vimwiki_folding = 'expr'
-    let g:vimwiki_html_header_numbering = 0
-    let g:vimwiki_list_ignore_newline = 0
-    nmap <silent> <leader>tt :VimwikiToggleListItem<cr>
-
 
     "/////////////////////////////////////////////////////////////////////////////
     " VimOrganizer
@@ -585,17 +647,19 @@ function! PluginSettings()
     syntax on
 endfunction
 call PluginSettings()
+" }}}
 
 autocmd FileType * set formatoptions-=c formatoptions-=r formatoptions-=o
 
 
 finish
 
+" 显示总行数
 
-" programming related 
-"set tags+=./tags,./../tags,./**/tags,tags,~/.vim/systags " which tags files CTRL-] will find 
+" programming related
+"set tags+=./tags,./../tags,./**/tags,tags,~/.vim/systags " which tags files CTRL-] will find
 
-set viminfo+=! " make sure it can save viminfo 
+set viminfo+=! " make sure it can save viminfo
 
 " diff
 

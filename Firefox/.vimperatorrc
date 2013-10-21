@@ -10,4 +10,7 @@ noremap <F8> :nohlsearch<CR>
 noremap s ogo 
 noremap S tgo 
 
+" 默认Normal模式
+set focuscontent 
+
 highlight Hint font-family: monospace; font-size: 15px; font-weight: bold; text-transform: lowwercase; color: white; background-color: red; border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 1px 0px 1px; 

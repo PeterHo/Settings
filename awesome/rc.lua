@@ -83,8 +83,8 @@ tags = {
         "[Files]",
         "[VBox]",
     },
-    layout = { 
-        layouts[1], 
+    layout = {
+        layouts[1],
         layouts[1],
         layouts[1],
         layouts[1],
@@ -115,7 +115,7 @@ menu = mymainmenu })
 
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right"}, "%Y年%m月%d日  %A   %H:%M", 60) 
+mytextclock = awful.widget.textclock({ align = "right"}, "%Y年%m月%d日  %A   %H:%M", 60)
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -223,15 +223,15 @@ awful.key({ modkey,           }, "e",      awful.tag.viewnext       ),
 awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
 -- 切换窗口
-awful.key({ modkey,           }, "i", 
+awful.key({ modkey,           }, "i",
     function () awful.client.focus.byidx(1)
         if client.focus then client.focus:raise() end
     end),
-awful.key({ modkey,           }, "u", 
+awful.key({ modkey,           }, "u",
     function () awful.client.focus.byidx(-1)
         if client.focus then client.focus:raise() end
     end),
-awful.key({ modkey,           }, "j", 
+awful.key({ modkey,           }, "j",
     function () awful.client.focus.bydirection("down")
         if client.focus then client.focus:raise() end
     end),
@@ -375,14 +375,14 @@ end
 SwitchTagHotKeys = {"a", "s", "d", "f", "g"}
 for i = 1, #SwitchTagHotKeys do
     globalkeys = awful.util.table.join(globalkeys,
-    awful.key({modkey            }, SwitchTagHotKeys[i], 
+    awful.key({modkey            }, SwitchTagHotKeys[i],
     function ()
         local screen = mouse.screen
         if tags[screen][i] then
             awful.tag.viewonly(tags[screen][i])
         end
     end),
-    awful.key({modkey, "Shift"   }, SwitchTagHotKeys[i], 
+    awful.key({modkey, "Shift"   }, SwitchTagHotKeys[i],
     function ()
         local screen = mouse.screen
         if tags[screen][i] then
@@ -408,11 +408,11 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 
-screenIndex = screen.count() 
+screenIndex = screen.count()
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-        properties = { 
+        properties = {
             border_width = beautiful.border_width,
             border_color = beautiful.border_normal,
             focus = true,
@@ -464,8 +464,8 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- }}}
 
 -- {{{ 自启动
-autorunApps = 
-{ 
+autorunApps =
+{
     "firefox",
     "gvim",
     -- "gnome-screensaver",
@@ -473,9 +473,11 @@ autorunApps =
     -- "thunar"
     "goldendict",
     -- "x-terminal-emulator",
+    -- "unclutter",
     "vmware-user",
     "/usr/bin/env python '/home/goodhzz/src/goagent-65b9542b98d2/local/goagent-gtk.py'",
     "dropbox start"
+    -- "xscreensaver -no-splash"
     -- "ubuntuone-launch",
     -- "gnome-sound-applet"
 }
