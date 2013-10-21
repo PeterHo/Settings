@@ -19,7 +19,8 @@ editer = "xfce4-terminal"
 gui_editor = "gvim"
 brower = "firefox"
 graphics = "gimp"
-file_manager = "thunar"
+file_manager = terminal .. " -e ranger"
+file_manager2 = "thunar"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 -- }}}
@@ -278,7 +279,8 @@ awful.key({ modkey, "Shift"   }, "space",   function () awful.layout.inc(layouts
 -- 启动程序
 awful.key({ modkey,           }, "v",       function () awful.util.spawn(gui_editor) end),
 awful.key({ modkey,           }, "b",       function () awful.util.spawn(brower) end),
-awful.key({ modkey,           }, "h",       function () awful.util.spawn(file_manager) end),
+awful.key({ modkey,           }, "y",       function () awful.util.spawn(file_manager) end),
+awful.key({ modkey, "Shift"   }, "y",       function () awful.util.spawn(file_manager2) end),
 awful.key({ modkey,           }, "Return",  function () awful.util.spawn(terminal) end),
 awful.key({ modkey,           }, "r",       function () mypromptbox[mouse.screen]:run() end),
 awful.key({ modkey, "Shift"   }, "r",
@@ -292,10 +294,13 @@ end),
 -- 恢复窗口
 awful.key({ modkey, "Control" }, "n",       awful.client.restore),
 
--- 获取某个窗口的名字和类信息
-awful.key({ modkey, }, "F10",
+-- 获取当前窗口名和类名
+awful.key({ modkey, "Shift"   }, "c",
 function ()
-    awful.util.spawn_with_shell("zenity --info --no-wrap --text=\"`xprop | grep --color=none \"WM_CLASS\|^WM_NAME\"`\"")
+    wm_id = string.sub(awful.util.pread("xprop -root _NET_ACTIVE_WINDOW"), 41, -2)
+    class_name = awful.util.pread("xprop -id " .. wm_id .. " WM_CLASS")
+    window_name = awful.util.pread("xprop -id " .. wm_id .. " WM_NAME")
+    awful.util.spawn("zenity --info --no-wrap --text='" .. class_name .. window_name .. "'")
 end),
 
 awful.key({ modkey, "Control" }, "r",       awesome.restart),
@@ -303,7 +308,6 @@ awful.key({ modkey, "Shift"   }, "q",       awesome.quit)
 
 -- awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 -- awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
-
 )
 
 clientkeys = awful.util.table.join(
@@ -424,6 +428,7 @@ awful.rules.rules = {
             keys = clientkeys,
             size_hints_honor = false,
             buttons = clientbuttons } },
+
     { rule = { class = "MPlayer" },
         properties = { floating = true } },
     { rule = { class = "Smplayer" },
@@ -432,8 +437,15 @@ awful.rules.rules = {
         properties = { floating = true } },
     { rule = { class = "gimp" },
         properties = { floating = true } },
+    { rule = { class = "goldendict" },
+        properties = { floating = true } },
     { rule = { class = "Firefox", name = "Download" },
         properties = { floating = true } },
+    { rule = { class = "Firefox", name = "我的足迹" },
+        properties = { floating = true } },
+    { rule = { class = "Firefox", name = "Firefox 首选项" },
+        properties = { floating = true } },
+
     { rule = { class = "Firefox" },
         properties = { tag = tags[screenIndex][1] } },
     { rule = { class = "Gvim" },

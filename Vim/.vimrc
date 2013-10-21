@@ -22,19 +22,23 @@ function! PluginManager()
     " 美化状态栏
     Bundle 'bling/vim-airline'
     Bundle 'Lokaltog/powerline-fonts'
+    " <C-W>o
+    Bundle 'vim-scripts/zoomwintab.vim'
+    " 显示缩进
+    Bundle 'nathanaelkane/vim-indent-guides'
     " }}}
 
     " ------------------------------------------------------------------
     " {{{ 工程管理
     " ------------------------------------------------------------------
-    "" Vimprj的依赖项
-    " Bundle 'vim-scripts/DfrankUtil'
-    "" 管理工程相关的设置
-    "Bundle 'vimprj'
+    " Vimprj的依赖项
+    Bundle 'vim-scripts/DfrankUtil'
+    " 管理工程相关的设置
+    Bundle 'vimprj'
     " 源代码管理
     Bundle 'tpope/vim-fugitive'
-    "" 项目向导
-    "Bundle 'PeterHo/VimAssist'
+    " 项目向导
+    Bundle 'PeterHo/VimAssist'
     " }}}
 
     " ------------------------------------------------------------------
@@ -66,6 +70,8 @@ function! PluginManager()
     Bundle 'CmdlineComplete'
     " 快速移动光标
     Bundle 'Lokaltog/vim-easymotion'
+    " 快速删除多余空格
+    Bundle 'bronson/vim-trailing-whitespace'
     " }}}
 
     " ------------------------------------------------------------------
@@ -73,12 +79,14 @@ function! PluginManager()
     " ------------------------------------------------------------------
     "" 快速在.c和.h文件之间切换
     "Bundle 'a.vim'
+    " 用%匹配更多语句对
+    Bundle 'vim-scripts/matchit.zip'
     "" 代替taglist.vim
     "Bundle 'majutsushi/tagbar'
     "" 方便对齐代码
     "Bundle 'godlygeek/tabular'
-    "" 文件中查找替换
-    "Bundle 'vim-scripts/EasyGrep'
+    " 文件中查找替换
+    Bundle 'vim-scripts/EasyGrep'
     "" 快速设置书签
     "Bundle 'vim-scripts/Vim-bookmark'
     "" TopCoder
@@ -315,7 +323,7 @@ function! CommandOrKeymapSettings()
     nnoremap <CR> O<Esc>j
     nnoremap <S-CR> o<Esc>k
     nnoremap <Space> i<Space><Esc>l
-    " nnoremap <Backspace> X
+    nnoremap <Backspace> X
     " }}}
 
     " ------------------------------------------------------------------
@@ -396,9 +404,9 @@ function! PluginSettings()
     " " bufferline
     " let g:airline#extensions#bufferline#enabled = 1
     " let g:airline#extensions#bufferline#overwrite_variables = 1
-    " " fugitive
-    " let g:airline#extensions#branch#enabled = 1
-    " let g:airline#extensions#branch#empty_message = ''
+    " fugitive
+    let g:airline#extensions#branch#enabled = 1
+    let g:airline#extensions#branch#empty_message = ''
     " " syntastic
     " let g:airline#extensions#syntastic#enabled = 1
     " " tabbar
@@ -421,10 +429,45 @@ function! PluginSettings()
     " }}}
 
     " ------------------------------------------------------------------
+    " {{{ Indent Guides
+    " ------------------------------------------------------------------
+    let g:indent_guides_enable_on_vim_startup = 1
+    let g:indent_guides_guide_size = 1
+    let g:indent_guides_start_level = 2
+    let g:indent_guides_space_guides = 1
+    if has("gui_running")
+        let g:indent_guides_auto_colors = 1
+    else
+        let g:indent_guides_auto_colors = 0
+        autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkgrey
+        autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
+    endif
+    " }}}
+
+    " ------------------------------------------------------------------
+    " {{{ vimprj
+    " ------------------------------------------------------------------
+    let g:vimprj_changeCurDirIfVimprjFound=0
+
+    function! <SID>SetMainDefaults()
+        " 设置tags路径
+        set tags=./.vimprj/tags
+    endfunction
+
+    call <SID>SetMainDefaults()
+
+    call vimprj#init()
+
+    function! g:vimprj#dHooks['SetDefaultOptions']['main_options'](dParams)
+        call <SID>SetMainDefaults()
+    endfunction
+    " }}}
+
+    " ------------------------------------------------------------------
     " {{{ fugitive
     " ------------------------------------------------------------------
-    command! -nargs=0 Gs :Gstatus
-    command! -nargs=0 Gc :Gcommit
+    command! -nargs=0 G :Gstatus
+    cnoremap Cm Gcommit -m "
     " }}}
 
     " ------------------------------------------------------------------
@@ -447,7 +490,7 @@ function! PluginSettings()
     " ------------------------------------------------------------------
     " {{{ bufkill
     " ------------------------------------------------------------------
-    noremap <silent> <leader>z :bd<CR>
+    noremap <silent> <leader>z :BD<cr>
     " }}}
 
     " ------------------------------------------------------------------
@@ -462,7 +505,7 @@ function! PluginSettings()
     nnoremap <silent><leader>a :MBEToggleMRU<cr>
     nnoremap <silent><C-k> :MBEbn<cr>
     nnoremap <silent><C-j> :MBEbp<cr>
-    nnoremap <silent><C-i> <C-^>
+    nnoremap <silent><C-h> <C-^>
     " }}}
 
     " ------------------------------------------------------------------
@@ -527,6 +570,40 @@ function! PluginSettings()
     " }}}
 
     " ------------------------------------------------------------------
+    " {{{ EasyGrep
+    " ------------------------------------------------------------------
+    let g:EasyGrepMode = 2
+    let g:EasyGrepRecursive = 1
+
+    " }}}
+
+    " ------------------------------------------------------------------
+    " {{{ Cscope
+    " ------------------------------------------------------------------
+    ":set cscopequickfix=s-,c-,d-,i-,t-,e-
+    set cst
+    set csto=1
+
+    nmap <C-C>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-C>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-C>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+    nmap <C-C><C-S> :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C><C-G> :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C><C-C> :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C><C-T> :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C><C-E> :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-C><C-F> :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-C><C-I> :cs find i <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-C><C-D> :cs find d <C-R>=expand("<cword>")<CR><CR>
+    " }}}
+
+    " ------------------------------------------------------------------
     " {{{ vimshell
     " ------------------------------------------------------------------
     let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
@@ -562,38 +639,11 @@ function! PluginSettings()
     let g:tagbar_singleclick=1
 
 
-
-
     "/////////////////////////////////////////////////////////////////////////////
     " TagHighlight
     "/////////////////////////////////////////////////////////////////////////////
     nnoremap <silent> <F12> :UpdateTypesFile<CR>
 
-
-    "/////////////////////////////////////////////////////////////////////////////
-    " Cscope
-    "/////////////////////////////////////////////////////////////////////////////
-    ":set cscopequickfix=s-,c-,d-,i-,t-,e-
-    set cst
-    set csto=1
-
-    nmap <C-C>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-C>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-C>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-    nmap <C-C><C-S> :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C><C-G> :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C><C-C> :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C><C-T> :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C><C-E> :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-C><C-F> :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-C><C-I> :cs find i <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-C><C-D> :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 
 
@@ -603,26 +653,6 @@ function! PluginSettings()
     let g:vbookmark_bookmarkSaveFile = $HOME . '/.vim/.vimbookmark'
     nnoremap <silent> <F2> :VbookmarkNext<CR>
 
-
-    "/////////////////////////////////////////////////////////////////////////////
-    " vimprj
-    "/////////////////////////////////////////////////////////////////////////////
-"    let g:vimprj_changeCurDirIfVimprjFound=0
-
-"    function! <SID>SetMainDefaults()
-"        " your default options goes here!
-"        set tags=./.vimprj/tags
-"    endfunction
-"
-"    call <SID>SetMainDefaults()
-"
-"    " initialize vimprj plugin
-"    call vimprj#init()
-"
-"    " define a hook
-"    function! g:vimprj#dHooks['SetDefaultOptions']['main_options'](dParams)
-"        call <SID>SetMainDefaults()
-"    endfunction
 
 
     "/////////////////////////////////////////////////////////////////////////////
@@ -666,7 +696,6 @@ autocmd FileType * set formatoptions-=c formatoptions-=r formatoptions-=o
 
 finish
 
-" 显示总行数
 
 " programming related
 "set tags+=./tags,./../tags,./**/tags,tags,~/.vim/systags " which tags files CTRL-] will find
@@ -674,8 +703,6 @@ finish
 set viminfo+=! " make sure it can save viminfo
 
 " diff
-
-" 窗口独占切换
 
 " Update
 :nmap <M-u> :call Update()<CR><CR>
