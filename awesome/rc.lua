@@ -52,15 +52,15 @@ end
 -- loclaization
 os.setlocale(os.getenv("LANG"))
 
--- home path
-homedir = awful.util.getdir("config")
+-- config path
+config_dir = awful.util.getdir("config")
 
 -- Themes
 -- themeName = "bamboo"
 -- themeName = "rbown"
 -- themeName = "brown"
 themeName = "wmii"
-themesPath = homedir .. "/themes/"
+themesPath = config_dir .. "/themes/"
 beautiful.init(themesPath .. themeName .. "/theme.lua")
 
 
@@ -514,8 +514,9 @@ if not is_running(autorunApps[1]) then
     end
 end
 
+-- awful.util.spawn_with_shell("export PATH+=/home/goodhzz/Dropbox/Bin")
 -- run_once("nm-applet")
--- run_once("gnome-power-manager")
+-- run_once("gnome-power-manage
 
 -- run_once("urxvtd")
 -- run_once("unclutter")
