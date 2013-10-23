@@ -12,10 +12,7 @@ require("debian.menu")
 -- }}}
 
 -- {{{ 全局变量
-terminal = "xfce4-terminal"
-editer = "xfce4-terminal"
--- terminal = "x-terminal-emulator"
--- terminal = "urxvtc"
+terminal = "xterm"
 gui_editor = "gvim"
 brower = "firefox"
 graphics = "gimp"
@@ -439,7 +436,9 @@ awful.rules.rules = {
         properties = { floating = true } },
     { rule = { class = "goldendict" },
         properties = { floating = true } },
-    { rule = { class = "Firefox", name = "Download" },
+    { rule = { class = "Keepassx" },
+        properties = { floating = true } },
+   { rule = { class = "Firefox", name = "Download" },
         properties = { floating = true } },
     { rule = { class = "Firefox", name = "我的足迹" },
         properties = { floating = true } },
@@ -489,7 +488,6 @@ autorunApps =
     -- "gnome-settings-daemon",
     -- "thunar"
     "goldendict",
-    -- "x-terminal-emulator",
     -- "unclutter",
     "vmware-user",
     "/usr/bin/env python '/home/goodhzz/src/goagent-65b9542b98d2/local/goagent-gtk.py'",

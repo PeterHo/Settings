@@ -506,6 +506,9 @@ function! PluginSettings()
     nnoremap <silent><C-k> :MBEbn<cr>
     nnoremap <silent><C-j> :MBEbp<cr>
     nnoremap <silent><C-h> <C-^>
+    nnoremap <silent><leader>k :MBEbn<cr>
+    nnoremap <silent><leader>j :MBEbp<cr>
+    nnoremap <silent><leader>h <C-^>
     " }}}
 
     " ------------------------------------------------------------------
@@ -609,7 +612,7 @@ function! PluginSettings()
     let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
     let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
     let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-    command! -nargs=0 S :VimShell
+    command! -nargs=0 S :VimShellPop
     " }}}
 
     " ------------------------------------------------------------------
